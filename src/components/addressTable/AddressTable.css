@@ -1,0 +1,36 @@
+.main {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 80%;
+    max-width: 900px; 
+    background-color: #fff; 
+    border: 1px solid #ccc; 
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  thead {
+    background-color: #2e4760;
+    color: white;
+  }
+
+  tbody tr:nth-of-type(odd) {
+    background-color: #f8f8f8;
+  }
+
+  tbody tr:nth-of-type(even) {
+    background-color: #e0e0e0;
+  }
+
+  td {
+    padding: 8px;
+  }
