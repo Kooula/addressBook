@@ -9,7 +9,7 @@ const admin = {userName: 'admin', password: 'admin'};
 
 export const AuthProvider = ({children}) => {
     const navigateTo = useNavigate()
-    const [validAuth, setValidAuth] = useState(localStorage.getItem('validAuth') === null ? false : JSON.parse(localStorage.getItem('validAuth')))
+    const [validAuth, setValidAuth] =  useState(JSON.parse(localStorage.getItem('validAuth')) ?? false)
 
     const logIn = (loginData) => {
         if(
