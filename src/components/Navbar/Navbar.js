@@ -33,9 +33,9 @@ const Navbar = () => {
                 </a>) : '' } 
                 
             </li>
-            <li onClick={() => { authContext.logOut() }}>
+            {authContext.validAuth ? (<li onClick={() => { authContext.logOut() }}>
                 <a href="/login">Logout</a>
-            </li>
+            </li>): ''}
         </ul>
     </div>
   )

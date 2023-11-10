@@ -22,7 +22,3 @@ li a {
 li:hover {
     background-color: #555;
 }
-
-li:last-child {
-    float: right;
-}
