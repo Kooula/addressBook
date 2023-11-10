@@ -41,7 +41,7 @@ const Home = () => {
       setIsDataValid(false);
       return;
     }
-    usersContext.updateUser({ ...formData });
+    UsersContext.updateUser({ ...formData });
     closeModal();
   };
 

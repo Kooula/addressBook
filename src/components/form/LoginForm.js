@@ -1,12 +1,13 @@
 import React from "react";
 import { ErrorMessage } from "../../validators/FormValidation";
+import './LoginForm.css'
 
 const LoginForm = ({ onSubmit, formData, onInputChange, isDataValid }) => {
   return (
     <div>
       <form>
-        <div className="control-group">
-          <div className="form-control">
+        <div className="login-form">
+          <div className="form-control-login">
             <label>Username</label>
             <input
               name="userName"
@@ -19,9 +20,9 @@ const LoginForm = ({ onSubmit, formData, onInputChange, isDataValid }) => {
               }
             />
             <ErrorMessage condition={!isDataValid && !formData.userName}
-              message="username is required"/>
+              message="Username is required"/>
           </div>
-          <div className="form-control">
+          <div className="form-control-login">
             <label>Password</label>
             <input
               name="password"
@@ -34,7 +35,7 @@ const LoginForm = ({ onSubmit, formData, onInputChange, isDataValid }) => {
               }
             />
             <ErrorMessage condition={!isDataValid && !formData.password}
-              message="password is required"/>
+              message="Password is required"/>
           </div>
           <button onClick={onSubmit}>Login</button>
         </div>
