@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import "./Post.css";
 import Comments from "../comments/Comments";
 
 const Post = ({ post, name}) => {
   const [like, setLike] = useState(false);
   const [showComments, setShowComments] = useState(false);
+  const [visibleComments, setVisibleComments] = useState(2);
+  const navigate = useNavigate()
 
   const handleLikeClick = () => {
     setLike(!like);
@@ -15,6 +17,12 @@ const Post = ({ post, name}) => {
     setShowComments(!showComments);
   };
 
+  const handleMoreComments = () => {
+    setVisibleComments((prev) => prev + 2)
+    if (visibleComments > 3) {
+      navigate(`/post/${post.id}`);
+    }
+  };
   return (
     <div className="post">
       <div className="postsContainer">
@@ -62,13 +70,14 @@ const Post = ({ post, name}) => {
       {showComments && (
         <div className="comments-container">
           <input placeholder="Write a comment"></input>
-          {post.comments.map((comment) => (
+          {post.comments.slice(0, visibleComments).map((comment) => (
             <Comments
               body={comment.body}
               email={comment.email}
               key={comment.id}
             />
           ))}
+           <div style={{textAlign:'center'}} onClick={handleMoreComments}>Load More Comments</div>
         </div>
       )}
     </div>
