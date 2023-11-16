@@ -22,6 +22,17 @@ const Navbar = () => {
                 </a>
             </li>
             <li>
+            <a
+                    href="/posts"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        navigate("/posts");
+                    }}
+                >
+                    Posts
+                </a>
+            </li>
+            <li>
                 {!authContext.validAuth ? (<a
                     href="/login"
                     onClick={(e) => {

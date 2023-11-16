@@ -1,0 +1,46 @@
+.postsNavbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    height: 50px;
+    border-bottom: 1px solid ;
+    position: sticky;
+    top: 0;
+    background-color: white ;
+    z-index: 1000;
+}
+
+.postsNavbar.scrolled {
+    background-color: white;
+}
+
+.postsNavbar .left {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.postsNavbar .left .logo {
+    font-weight: bolder;
+    font-size: large;
+    color: darkblue;
+}
+
+.postsNavbar .right {
+    display: flex;
+}
+
+.postsNavbar .right .user{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+}
+
+.postsNavbar .right .user img{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}

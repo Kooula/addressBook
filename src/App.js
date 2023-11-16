@@ -6,6 +6,9 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import { AuthProvider } from "./context/AuthContext";
 import IsAuth from "./authentication/IsAuth";
+import NotFacebook from "./pages/NotFacebook";
+import { PostProvider } from "./context/PostsConext";
+
 
 function App() {
   return (
@@ -16,6 +19,14 @@ function App() {
             <Navbar />
             <Routes>
               <Route path="/login" element={<Login />} />
+              <Route
+                path="/posts"
+                element={
+                  <PostProvider>
+                    <NotFacebook />
+                  </PostProvider>
+                }
+              ></Route>
               <Route
                 path="/home"
                 element={

@@ -1,0 +1,14 @@
+.comment {
+    margin: 30px 0px;
+    display: flex;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px
+}
+
+.info span {
+    font-weight: 500;
+}

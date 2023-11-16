@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { DummyData } from "../const/DummyData";
+import { DummyData } from "../constants/DummyData";
 
 const UsersContext = createContext({
   users: [],

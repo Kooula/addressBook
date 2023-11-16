@@ -1,6 +1,6 @@
 import React from "react";
 import TableRow from "./TableRow";
-import { TABLE_HEADERS } from "../../const/InitialState";
+import { TABLE_HEADERS } from "../../constants/InitialState";
 import EditModal from "../editModal/EditModal";
 import "./AddressTable.css";
 

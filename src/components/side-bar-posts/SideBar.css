@@ -1,0 +1,44 @@
+.sideBar {
+   flex: 2;
+   position: sticky;
+   top: 70px;
+   height: calc(100vh - 100px) ;
+}
+
+.sideBar .container {
+    padding: 15px;
+    flex-direction: column;
+    display: flex;
+    gap: 10px;
+}
+
+.sideBar hr {
+    margin: 20px 0px;
+    width: 180px;
+}
+
+.sideBar .container .user{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sideBar .container .user img{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.sideBar .container .icons{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sideBar .container .icons img{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { INIT_STATE_FORM } from "../const/InitialState";
+import { INIT_STATE_FORM } from "../constants/InitialState";
 import useForm from "../hooks/useForm";
 import AddressForm from "../components/form/AddressForm";
 import AddressTable from "../components/addressTable/AddressTable";

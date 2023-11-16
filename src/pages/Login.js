@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import LoginForm from "../components/form/LoginForm";
 import useForm from "../hooks/useForm";
-import { INIT_STATE_LOGIN } from "../const/InitialState";
+import { INIT_STATE_LOGIN } from "../constants/InitialState";
 import { useNavigate } from "react-router-dom";
 import { LoginFormValidation } from "../validators/LoginFormValidation";
 import AuthContext from "../context/AuthContext";
