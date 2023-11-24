@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { INIT_STATE_FORM } from "../constants/InitialState";
 import useForm from "../hooks/useForm";
 import AddressForm from "../components/form/AddressForm";
-import AddressTable from "../components/addressTable/AddressTable";
+import AddressTable from "../components/Address-book/addressTable/AddressTable";
 import UsersContext from "../context/UsersContext";
 import { FormValidation } from "../validators/FormValidation";
 

@@ -1,71 +1,102 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState } from "react";
 import axios from "axios";
 
 const PostContext = createContext();
 
 const PostProvider = ({ children }) => {
   const [posts, setPosts] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [displayedPosts, setDisplayedPosts] = useState([]);
+  const [users, setUsers] = useState([])
 
-  const fetchPosts = async (page, limit) => {
+
+  const fetchPosts = async () => {
     try {
-      const userResponse = await axios.get(
-        "https://jsonplaceholder.typicode.com/users"
-      );
-      const users = userResponse.data;
+      const [users, postsValue, comments] = await Promise.all([
+        axios.get("https://jsonplaceholder.typicode.com/users"),
+        axios.get("https://jsonplaceholder.typicode.com/posts"),
+        axios.get("https://jsonplaceholder.typicode.com/comments"),
+      ]);
 
-      const postResponse = await axios.get(
-        `https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=${limit}`
-      );
-      const postsValue = postResponse.data;
+      const usersData = users.data.map((user) => ({
+        ...user,
+        online: user.id % 2 === 0,
+      }));
+      const postsData = postsValue.data;
+      const commentsData = comments.data;
 
-      const commentResponse = await axios.get(
-        "https://jsonplaceholder.typicode.com/comments"
-      );
-      const comments = commentResponse.data;
-
-      const lookUpUser = users.reduce((acc, user) => {
+      const lookUpUser = usersData.reduce((acc, user) => {
         acc[user.id] = acc[user.id] ? [...acc[user.id], user] : [user];
         return acc;
       }, {});
 
-      const lookUpComments = comments.reduce((acc, comment) => {
+      const lookUpComments = commentsData.reduce((acc, comment) => {
         const postId = comment.postId;
         acc[postId] = acc[postId] ? [...acc[postId], comment] : [comment];
         return acc;
       }, {});
 
-      const lookUpPosts = postsValue.map((post) => ({
+      const lookUpPosts = postsData.map((post) => ({
         ...post,
         user: lookUpUser[post.userId],
         comments: lookUpComments[post.id] || [],
       }));
-
-      setPosts((prevPosts) => [
-        ...prevPosts,
-        ...lookUpPosts.filter(
-          (newPost) => !prevPosts.some((prevPost) => prevPost.id === newPost.id)
-        ),
-      ]);
+      setPosts(lookUpPosts)
+      setUsers(usersData)
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
-  const handleLoadMore = () => {
+  const getRandomPosts = (count) => {
+    const allPosts = [...posts];
+    const randomPosts = [];
+
+    while (randomPosts.length < count && allPosts.length > 0) {
+      const randomIndex = Math.floor(Math.random() * allPosts.length);
+      const randomPost = allPosts.splice(randomIndex, 1)[0];
+      randomPosts.push(randomPost);
+    }
+
+    return randomPosts;
+  };
+
+  const removePost = (id) => {
+    setDisplayedPosts((prevPosts) => {
+      return prevPosts.filter((post) => post.id !== id)
+    })
+  }
+
+  const loadMore = () => {
     const nextPage = currentPage + 1;
+    setDisplayedPosts((prevPosts) => [...prevPosts, ...getRandomPosts(5)]);
     setCurrentPage(nextPage);
   };
 
-  useEffect(() => {
-    fetchPosts(currentPage, 5);
-    console.log(posts);
-  }, [currentPage]);
+  const findPostById = (postId) => {
+    return posts.find((post) => post.id === parseInt(postId, 10));
+  };
+
+  const getUserPosts = (userId) => {
+    return posts.filter((post) => post.userId === parseInt(userId, 10));
+  };
+
+  const getUserById = (userId) => {
+    return users.find((user) => user.id === parseInt(userId, 10));
+  };
+
 
   const value = {
-    posts,
-    handleLoadMore,
-    currentPage,
+    displayedPosts,
+    loadMore,
+    fetchPosts,
+    findPostById,
+    getRandomPosts,
+    setDisplayedPosts,
+    users,
+    getUserPosts,
+    removePost,
+    getUserById
   };
 
   return <PostContext.Provider value={value}>{children}</PostContext.Provider>;

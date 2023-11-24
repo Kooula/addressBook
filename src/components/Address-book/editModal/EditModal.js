@@ -1,6 +1,6 @@
 import React from "react";
 import ReactModal from "react-modal";
-import AddressForm from "../form/AddressForm";
+import AddressForm from "../../form/AddressForm";
 import "./EditModal.css";
 
 const EditModal = ({

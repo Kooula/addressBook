@@ -1,5 +1,5 @@
 .sideBar {
-   flex: 2;
+   width: 270px;
    position: sticky;
    top: 70px;
    height: calc(100vh - 100px) ;
@@ -42,3 +42,19 @@
     border-radius: 50%;
     object-fit: cover;
 }
+
+.sideBar .users img{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 8px;
+}
+
+.container-online{
+    padding: 15px;
+    flex-direction: column;
+    display: flex;
+    gap: 18px;
+}
+

@@ -8,6 +8,8 @@ import { AuthProvider } from "./context/AuthContext";
 import IsAuth from "./authentication/IsAuth";
 import NotFacebook from "./pages/NotFacebook";
 import { PostProvider } from "./context/PostsConext";
+import Profile from "./pages/Profile";
+import PostDetails from "./pages/PostDetails";
 
 
 function App() {
@@ -20,13 +22,32 @@ function App() {
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route
-                path="/posts"
+                path="/posts/*"
                 element={
                   <PostProvider>
-                    <NotFacebook />
+                    <Routes>
+                      <Route
+                        index
+                        element={
+                          <NotFacebook />
+                        }
+                      />
+                      <Route
+                        path="profile/:id"
+                        element={
+                            <Profile />
+                        }
+                      />
+                      <Route
+                        path="post/:id"
+                        element={
+                            <PostDetails />
+                        }
+                      />
+                    </Routes>
                   </PostProvider>
                 }
-              ></Route>
+              />
               <Route
                 path="/home"
                 element={

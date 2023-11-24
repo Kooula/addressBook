@@ -1,7 +1,11 @@
 import React from "react";
 import "./SideBar.css";
+import { Link } from "react-router-dom";
+import { usePostData } from "../../../context/PostsConext";
 
 const SideBar = () => {
+  const { users } = usePostData()
+
   return (
     <div className="sideBar">
       <div className="container">
@@ -19,14 +23,20 @@ const SideBar = () => {
         </div>
       </div>
       <hr />
-      <div className="container">
+      <div className="container-online">
         <span>Online friends</span>
-        <div className="user">
-          <img src="https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg" />
-          <span>Ivan Ivanić</span>
-        </div>
+        {users.map((user) => (
+    user.online ? (
+      <div className="users" key={user.id}>
+        <Link to={`profile/${user.id}`} style={{ textDecoration: 'none', display: 'flex', color: 'black' }} replace>
+        <img src="https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg" alt={user.name} />
+        <span>{user.name}</span>
+        </Link>
       </div>
+    ) : null
+    ))}
     </div>
+    </div> 
   );
 };
 
