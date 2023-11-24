@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { usePostData } from "../../../context/PostsConext";
 
 const SideBar = () => {
-  const { users } = usePostData()
+  const { users } = usePostData();
 
   return (
     <div className="sideBar">
@@ -25,18 +25,29 @@ const SideBar = () => {
       <hr />
       <div className="container-online">
         <span>Online friends</span>
-        {users.map((user) => (
-    user.online ? (
-      <div className="users" key={user.id}>
-        <Link to={`profile/${user.id}`} style={{ textDecoration: 'none', display: 'flex', color: 'black' }} replace>
-        <img src="https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg" alt={user.name} />
-        <span>{user.name}</span>
-        </Link>
+        {users.map((user) =>
+          user.online ? (
+            <div className="users" key={user.id}>
+              <Link
+                to={`profile/${user.id}`}
+                style={{
+                  textDecoration: "none",
+                  display: "flex",
+                  color: "black",
+                }}
+                replace
+              >
+                <img
+                  src="https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg"
+                  alt={user.name}
+                />
+                <span>{user.name}</span>
+              </Link>
+            </div>
+          ) : null
+        )}
       </div>
-    ) : null
-    ))}
     </div>
-    </div> 
   );
 };
 

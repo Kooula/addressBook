@@ -7,8 +7,7 @@ const PostProvider = ({ children }) => {
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [displayedPosts, setDisplayedPosts] = useState([]);
-  const [users, setUsers] = useState([])
-
+  const [users, setUsers] = useState([]);
 
   const fetchPosts = async () => {
     try {
@@ -41,8 +40,8 @@ const PostProvider = ({ children }) => {
         user: lookUpUser[post.userId],
         comments: lookUpComments[post.id] || [],
       }));
-      setPosts(lookUpPosts)
-      setUsers(usersData)
+      setPosts(lookUpPosts);
+      setUsers(usersData);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -63,9 +62,9 @@ const PostProvider = ({ children }) => {
 
   const removePost = (id) => {
     setDisplayedPosts((prevPosts) => {
-      return prevPosts.filter((post) => post.id !== id)
-    })
-  }
+      return prevPosts.filter((post) => post.id !== id);
+    });
+  };
 
   const loadMore = () => {
     const nextPage = currentPage + 1;
@@ -85,7 +84,6 @@ const PostProvider = ({ children }) => {
     return users.find((user) => user.id === parseInt(userId, 10));
   };
 
-
   const value = {
     displayedPosts,
     loadMore,
@@ -96,7 +94,7 @@ const PostProvider = ({ children }) => {
     users,
     getUserPosts,
     removePost,
-    getUserById
+    getUserById,
   };
 
   return <PostContext.Provider value={value}>{children}</PostContext.Provider>;

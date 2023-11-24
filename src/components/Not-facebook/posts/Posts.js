@@ -3,7 +3,6 @@ import Post from "./Post";
 import "./Posts.css";
 
 const Posts = ({ displayedPosts }) => {
-
   return (
     <div className="posts">
       {displayedPosts.map((post) => (
@@ -13,7 +12,7 @@ const Posts = ({ displayedPosts }) => {
           name={post.user[0].name}
           comments={post.comments}
           initialShowComments={false}
-          initialCommentsNumber={2} 
+          initialCommentsNumber={2}
         />
       ))}
     </div>

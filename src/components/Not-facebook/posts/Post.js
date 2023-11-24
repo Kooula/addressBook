@@ -17,7 +17,7 @@ const Post = ({ post, initialShowComments, initialCommentsNumber }) => {
     showDropdown,
   } = usePostActions(initialShowComments, initialCommentsNumber);
 
-  const {removePost} = usePostData()
+  const { removePost } = usePostData();
   const navigate = useNavigate();
 
   const handleMoreComments = () => {
@@ -34,7 +34,11 @@ const Post = ({ post, initialShowComments, initialCommentsNumber }) => {
           <div className="userInfo">
             <Link
               to={`profile/${post.user[0].id}`}
-              style={{ textDecoration: "none", display: "flex", color: "black" }}
+              style={{
+                textDecoration: "none",
+                display: "flex",
+                color: "black",
+              }}
               replace
             >
               <img
@@ -46,20 +50,21 @@ const Post = ({ post, initialShowComments, initialCommentsNumber }) => {
             </Link>
           </div>
           <div className="actions">
-            <button onClick={toggleDropdown} className="menuOptions">...</button>
+            <button onClick={toggleDropdown} className="menuOptions">
+              ...
+            </button>
             {showDropdown && (
-        <div className="dropdown-content">
-          <div className="dropdown-item">
-            Report post
-          </div>
-          <div className="dropdown-item" onClick={() => removePost(post.id)}>
-            Delete post
-          </div>
-          <div className="dropdown-item">
-            Save post
-          </div>
-        </div>
-      )}
+              <div className="dropdown-content">
+                <div className="dropdown-item">Report post</div>
+                <div
+                  className="dropdown-item"
+                  onClick={() => removePost(post.id)}
+                >
+                  Delete post
+                </div>
+                <div className="dropdown-item">Save post</div>
+              </div>
+            )}
           </div>
         </div>
         <div className="content">

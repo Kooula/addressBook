@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 function usePostActions(initialShowComments, initialCommentsNumber) {
   const [like, setLike] = useState(false);
@@ -38,7 +38,7 @@ function usePostActions(initialShowComments, initialCommentsNumber) {
     handleOpenComments,
     loadMoreComments,
     toggleDropdown,
-    showDropdown
+    showDropdown,
   };
 }
 
