@@ -1,25 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PostsNavbar from "../components/Navbar/PostsNavbar";
 import SideBar from "../components/Not-facebook/side-bar-posts/SideBar";
 import Posts from "../components/Not-facebook//posts/Posts";
 import { usePostData } from "../context/PostsConext";
 
+
 const NotFacebook = () => {
   const {
     loadMore,
-    fetchPosts,
+    loading,
     displayedPosts,
-    getRandomPosts,
-    setDisplayedPosts,
   } = usePostData();
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchPosts().then(() => {
-      setLoading(false);
-    });
-    setDisplayedPosts(getRandomPosts(5));
-  }, [loading]);
 
   return (
     <div>
@@ -30,7 +21,7 @@ const NotFacebook = () => {
           {loading ? (
             <p>Loading posts...</p>
           ) : (
-            <Posts displayedPosts={displayedPosts} />
+            <Posts displayedPosts={displayedPosts}/>
           )}
         </div>
       </div>

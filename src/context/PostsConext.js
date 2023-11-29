@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState, useCallback } from "react";
 import axios from "axios";
 
 const PostContext = createContext();
@@ -8,8 +8,9 @@ const PostProvider = ({ children }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [displayedPosts, setDisplayedPosts] = useState([]);
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const fetchPosts = async () => {
+  const fetchPosts = useCallback(async () => {
     try {
       const [users, postsValue, comments] = await Promise.all([
         axios.get("https://jsonplaceholder.typicode.com/users"),
@@ -45,7 +46,15 @@ const PostProvider = ({ children }) => {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchPosts().then(() => {
+      setLoading(false);
+    });
+    setDisplayedPosts(getRandomPosts(5))
+  }, [loading, fetchPosts]);
+
 
   const getRandomPosts = (count) => {
     const allPosts = [...posts];
@@ -56,7 +65,6 @@ const PostProvider = ({ children }) => {
       const randomPost = allPosts.splice(randomIndex, 1)[0];
       randomPosts.push(randomPost);
     }
-
     return randomPosts;
   };
 
@@ -66,10 +74,24 @@ const PostProvider = ({ children }) => {
     });
   };
 
+  const addNewPost = (post) => {
+    setDisplayedPosts((prevPosts) => [post, ...prevPosts]);
+  };
+
   const loadMore = () => {
     const nextPage = currentPage + 1;
     setDisplayedPosts((prevPosts) => [...prevPosts, ...getRandomPosts(5)]);
     setCurrentPage(nextPage);
+  };
+
+  const addCommentToPost = (postId, newComment) => {
+    setDisplayedPosts((prevPosts) => {
+      return prevPosts.map((post) =>
+        post.id === postId
+          ? { ...post, comments: [newComment, ...post.comments] }
+          : post
+      );
+    });
   };
 
   const findPostById = (postId) => {
@@ -95,6 +117,9 @@ const PostProvider = ({ children }) => {
     getUserPosts,
     removePost,
     getUserById,
+    addNewPost,
+    loading,
+    addCommentToPost,
   };
 
   return <PostContext.Provider value={value}>{children}</PostContext.Provider>;

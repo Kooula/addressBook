@@ -29,7 +29,7 @@ const SideBar = () => {
           user.online ? (
             <div className="users" key={user.id}>
               <Link
-                to={`profile/${user.id}`}
+                to={`/posts/profile/${user.id}`}
                 style={{
                   textDecoration: "none",
                   display: "flex",
