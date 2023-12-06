@@ -1,11 +1,11 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { DummyData } from "../constants/DummyData";
 
 const UsersContext = createContext({
   users: [],
 });
 
-export function UsersProvider({ children }) {
+const UsersProvider = ({ children }) =>  {
   const [users, setUsers] = useState(DummyData);
 
   const addUser = (user) => {
@@ -40,4 +40,13 @@ export function UsersProvider({ children }) {
   );
 }
 
-export default UsersContext;
+const useUsersContext = () => {
+  const context = useContext(UsersContext);
+  if (!context) {
+    throw new Error("usePostData must be used within UsersProvider");
+  }
+  return context;
+};
+
+export { UsersProvider, useUsersContext };
+

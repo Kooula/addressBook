@@ -1,7 +1,8 @@
-import { createContext, useContext, useEffect, useState, useCallback } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
+import mergePostData from "../components/common/helpers/mergePostData";
 
-const PostContext = createContext();
+const PostContext = createContext(); 
 
 const PostProvider = ({ children }) => {
   const [posts, setPosts] = useState([]);
@@ -10,55 +11,44 @@ const PostProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchPosts = useCallback(async () => {
+  const fetchPosts = async () => {
     try {
       const [users, postsValue, comments] = await Promise.all([
         axios.get("https://jsonplaceholder.typicode.com/users"),
         axios.get("https://jsonplaceholder.typicode.com/posts"),
         axios.get("https://jsonplaceholder.typicode.com/comments"),
       ]);
-
-      const usersData = users.data.map((user) => ({
-        ...user,
-        online: user.id % 2 === 0,
-      }));
-      const postsData = postsValue.data;
-      const commentsData = comments.data;
-
-      const lookUpUser = usersData.reduce((acc, user) => {
-        acc[user.id] = acc[user.id] ? [...acc[user.id], user] : [user];
-        return acc;
-      }, {});
-
-      const lookUpComments = commentsData.reduce((acc, comment) => {
-        const postId = comment.postId;
-        acc[postId] = acc[postId] ? [...acc[postId], comment] : [comment];
-        return acc;
-      }, {});
-
-      const lookUpPosts = postsData.map((post) => ({
-        ...post,
-        user: lookUpUser[post.userId],
-        comments: lookUpComments[post.id] || [],
-      }));
-      setPosts(lookUpPosts);
-      setUsers(usersData);
+      const [usersData, postsData, commentsData] = [
+        users.data,
+        postsValue.data,
+        comments.data,
+      ];
+      updateAllState(usersData, commentsData, postsData)
     } catch (error) {
       console.error("Error fetching data:", error);
+    } finally {
+        setLoading(false);
     }
-  }, []);
+  };
 
   useEffect(() => {
-    fetchPosts().then(() => {
-      setLoading(false);
-    });
-    setDisplayedPosts(getRandomPosts(5))
-  }, [loading, fetchPosts]);
+    fetchPosts();
+  }, []);
 
+  const updateAllState = (usersData, commentsData, postsData) => {
+    const onlineUsers = usersData.map((user) => ({
+      ...user,
+      online: user.id % 2 === 0,
+    }));
+    const mergedData = mergePostData(usersData, commentsData, postsData)
+      setUsers(onlineUsers);
+      setPosts(mergedData);
+      setDisplayedPosts(getRandomPosts(5, mergedData));
+  };
 
-  const getRandomPosts = (count) => {
+  const getRandomPosts = (count, posts) => {
     const allPosts = [...posts];
-    const randomPosts = [];
+    const randomPosts = []
 
     while (randomPosts.length < count && allPosts.length > 0) {
       const randomIndex = Math.floor(Math.random() * allPosts.length);
@@ -80,7 +70,7 @@ const PostProvider = ({ children }) => {
 
   const loadMore = () => {
     const nextPage = currentPage + 1;
-    setDisplayedPosts((prevPosts) => [...prevPosts, ...getRandomPosts(5)]);
+    setDisplayedPosts((prevPosts) => [...prevPosts, ...getRandomPosts(5, posts)]);
     setCurrentPage(nextPage);
   };
 
@@ -109,7 +99,6 @@ const PostProvider = ({ children }) => {
   const value = {
     displayedPosts,
     loadMore,
-    fetchPosts,
     findPostById,
     getRandomPosts,
     setDisplayedPosts,

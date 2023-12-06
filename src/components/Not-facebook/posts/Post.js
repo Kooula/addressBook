@@ -22,7 +22,7 @@ const Post = ({ post, initialShowComments, initialCommentsNumber }) => {
   const { formData, onInputChange, formReset } = useForm(INIT_STATE_COMMENT);
   const navigate = useNavigate();
 
-  const handleAddComment = (postId) => {
+  const onAddComment = (postId) => {
     const body = formData.body;
     const email = formData.email;
     const newComment = {
@@ -121,7 +121,7 @@ const Post = ({ post, initialShowComments, initialCommentsNumber }) => {
             ></input>
             <button
               className="action-button"
-              onClick={() => handleAddComment(post.id)}
+              onClick={() => onAddComment(post.id)}
             >
               comment
             </button>

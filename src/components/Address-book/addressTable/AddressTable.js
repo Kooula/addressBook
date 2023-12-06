@@ -6,7 +6,7 @@ import "./AddressTable.css";
 
 const AddressTable = ({
   users,
-  userForEdit,
+  onEditClick,
   formData,
   isOpen,
   onInputChange,
@@ -43,7 +43,7 @@ const AddressTable = ({
                 contactType={user.contactType}
                 contact={user.contact}
                 id={user.id}
-                userForEdit={userForEdit}
+                onEditClick={onEditClick}
               />
             );
           })}

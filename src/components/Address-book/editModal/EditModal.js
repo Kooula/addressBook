@@ -3,12 +3,13 @@ import ReactModal from "react-modal";
 import AddressForm from "../../form/AddressForm";
 import "./EditModal.css";
 
+
 const EditModal = ({
-  formData,
-  onInputChange,
   isOpen,
   closeModal,
   submitEdit,
+  formData,
+  onInputChange
 }) => {
   ReactModal.setAppElement("#root");
 

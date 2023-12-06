@@ -1,9 +1,12 @@
 import React from "react";
 import "./NewPost.css";
 import { usePostData } from "../../../context/PostsConext";
+import { INIT_STATE_POST } from "../../../constants/InitialState";
+import useForm from "../../../hooks/useForm";
 
-const NewPost = ({ formData, onInputChange, formReset }) => {
+const NewPost = () => {
   const { addNewPost } = usePostData();
+  const { formData, onInputChange, formReset } = useForm(INIT_STATE_POST);
 
   const onPostSubmit = (e) => {
     e.preventDefault();

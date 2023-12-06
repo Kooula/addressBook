@@ -1,11 +1,11 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { FormValidation } from "../validators/FormValidation";
-import UsersContext from "../context/UsersContext";
+import { useUsersContext } from "../context/UsersContext";
 
 export default function useForm(INIT_STATE) {
   const [formData, setFormData] = useState(INIT_STATE);
   const [isDataValid, setIsDataValid] = useState(true);
-  const usersContext = useContext(UsersContext);
+  const { addUser } = useUsersContext()
 
   const onInputChange = ({ target: { name, value } }) => {
     setFormData({ ...formData, [name]: value });
@@ -19,10 +19,6 @@ export default function useForm(INIT_STATE) {
     setFormData(INIT_STATE);
   };
 
-  const userDataForUpdate = (data) => {
-    setFormData(data);
-  };
-
   const onSubmit = (e) => {
     e.preventDefault();
     const isValid = FormValidation(formData);
@@ -31,9 +27,14 @@ export default function useForm(INIT_STATE) {
       return;
     }
     const tempArray = { ...formData, id: Math.random() * 1000 };
-    usersContext.addUser(tempArray);
+    addUser(tempArray);
     formReset();
   };
+
+  const userDataForUpdate = (data) => {
+    setFormData(data);
+  };
+
 
   return {
     formData,
@@ -41,7 +42,7 @@ export default function useForm(INIT_STATE) {
     formReset,
     isDataValid,
     setIsDataValid,
-    userDataForUpdate,
     onSubmit,
+    userDataForUpdate
   };
 }

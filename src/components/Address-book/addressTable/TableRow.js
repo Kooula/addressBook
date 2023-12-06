@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import UsersContext from "../../../context/UsersContext";
+import UsersContext, { useUsersContext } from "../../../context/UsersContext";
 import "./TableRow.css";
 
 const TableRow = ({
@@ -11,9 +11,9 @@ const TableRow = ({
   address,
   contactType,
   contact,
-  userForEdit,
+  onEditClick,
 }) => {
-  const userContext = useContext(UsersContext);
+  const { deleteUser } = useUsersContext()
 
   return (
     <tr>
@@ -25,8 +25,8 @@ const TableRow = ({
       <td>{contactType + ": " + contact}</td>
       <td className="buttons">
         <button
-          onClick={(e) => {
-            userForEdit(id);
+          onClick={() => {
+            onEditClick(id);
           }}
         >
           Edit
@@ -34,7 +34,7 @@ const TableRow = ({
         <button
           style={{ backgroundColor: "red" }}
           onClick={(e) => {
-            userContext.deleteUser(id);
+           deleteUser(id);
           }}
         >
           X
