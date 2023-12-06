@@ -38,8 +38,8 @@ const Post = ({ post, initialShowComments, initialCommentsNumber }) => {
   const handleMoreComments = () => {
     loadMoreComments();
     if (visibleComments >= 4) {
-      navigate(`post/${post.id}`);
-    }
+      navigate(`/posts/post/${post.id}`,{ replace: true });
+    } 
   };
 
   return (
@@ -48,7 +48,7 @@ const Post = ({ post, initialShowComments, initialCommentsNumber }) => {
         <div className="postUser">
           <div className="userInfo">
             <Link
-              to={`profile/${post.user[0].id}`}
+              to={`/posts/profile/${post.user[0].id}`}
               style={{
                 textDecoration: "none",
                 display: "flex",

@@ -85,15 +85,15 @@ const PostProvider = ({ children }) => {
   };
 
   const findPostById = (postId) => {
-    return posts.find((post) => post.id === parseInt(postId, 10));
+    return posts.find((post) => post.id === parseInt(postId));
   };
 
   const getUserPosts = (userId) => {
-    return posts.filter((post) => post.userId === parseInt(userId, 10));
+    return posts.filter((post) => post.userId === parseInt(userId));
   };
 
   const getUserById = (userId) => {
-    return users.find((user) => user.id === parseInt(userId, 10));
+    return users.find((user) => user.id === parseInt(userId));
   };
 
   const value = {
